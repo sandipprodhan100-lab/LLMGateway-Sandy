@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Probe OmniRoute Gateway",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "./connect_omniroute.py"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
