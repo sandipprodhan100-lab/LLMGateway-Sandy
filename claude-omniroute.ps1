@@ -28,10 +28,22 @@ $env:OPENAI_BASE_URL = $env:OMNIROUTE_BASE_URL
 $env:OPENAI_API_KEY = $env:OMNIROUTE_API_KEY
 $env:OPENAI_MODEL = $env:OMNIROUTE_MODEL
 
-if (-not (Get-Command claude -ErrorAction SilentlyContinue)) {
-    Write-Error "Claude Code CLI was not found on PATH. Make sure the 'claude' command is installed and available in this terminal."
+$npmBin = Join-Path $env:APPDATA 'npm'
+if (Test-Path $npmBin) {
+    $env:Path = "$npmBin;$env:Path"
+}
+
+$claudeCommand = $null
+$claudeCandidates = @('claude', 'claude.exe', 'claude.cmd')
+foreach ($candidate in $claudeCandidates) {
+    $claudeCommand = Get-Command $candidate -ErrorAction SilentlyContinue
+    if ($claudeCommand) { break }
+}
+
+if (-not $claudeCommand) {
+    Write-Error "Claude Code CLI was not found on PATH. Install Claude Code or add its executable to PATH, then rerun this script."
     exit 1
 }
 
-& claude @PassThru
+& $claudeCommand.Source @PassThru
 exit $LASTEXITCODE

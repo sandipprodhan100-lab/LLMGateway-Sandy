@@ -19,10 +19,13 @@ set "OPENAI_BASE_URL=%OMNIROUTE_BASE_URL%"
 set "OPENAI_API_KEY=%OMNIROUTE_API_KEY%"
 set "OPENAI_MODEL=%OMNIROUTE_MODEL%"
 
+set "NPM_BIN=%APPDATA%\npm"
+if exist "%NPM_BIN%" set "PATH=%NPM_BIN%;%PATH%"
+
 where claude >nul 2>nul
 if errorlevel 1 (
   echo Claude Code CLI was not found on PATH.
-  echo Make sure the 'claude' command is installed and available in this terminal.
+  echo Install Claude Code or add its executable to PATH, then rerun this script.
   exit /b 1
 )
 
