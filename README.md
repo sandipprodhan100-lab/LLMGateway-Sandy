@@ -57,3 +57,8 @@ If you want to keep the same `.env` style settings, export both the `OMNIROUTE_*
 ## Expected behavior
 
 The probe makes a POST request to the OpenAI-style chat completions endpoint and prints the model response when the gateway is reachable.
+
+## Notes
+
+- Do not commit real API keys or `.env` files.
+- Keep secrets in local environment variables or a private `.env` file that is ignored by Git.
