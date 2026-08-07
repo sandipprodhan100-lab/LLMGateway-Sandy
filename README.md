@@ -19,21 +19,33 @@ This repository now includes a minimal VS Code-ready scaffold for connecting to 
 python .\connect_omniroute.py
 ```
 
-## Claude Code launchers
+## Claude Code via OmniRoute
 
-You can launch Claude Code through the gateway from either shell:
+This repo no longer uses wrapper scripts for Claude Code. Configure your Claude client or the Claude CLI to use OmniRoute directly by setting the appropriate gateway environment variables.
+
+### For Claude client / GUI
+
+Set these environment variables in your shell or inside the Claude interface if it supports custom gateway settings:
 
 ```powershell
-.\claude-omniroute.ps1
+$env:OMNIROUTE_BASE_URL = 'http://localhost:20128/v1'
+$env:OMNIROUTE_API_KEY = '<your-key-if-required>'
+$env:OMNIROUTE_MODEL = 'auto/best-fast'
+$env:OMNIROUTE_API_PATH = '/chat/completions'
 ```
 
-or:
+### For Claude CLI (route through OmniRoute without Anthropic login)
 
-```cmd
-claude-omniroute.cmd
+Use `--bare` so the CLI relies only on the `ANTHROPIC_*` environment variables and does not read the Anthropic keychain/OAuth login.
+
+```powershell
+$env:ANTHROPIC_BASE_URL = 'http://localhost:20128/v1'
+$env:ANTHROPIC_API_KEY = '<your-omniroute-key>'
+$env:ANTHROPIC_MODEL = 'auto/best-fast'
+claude --bare
 ```
 
-These wrappers set the gateway environment so Claude Code will route through the local OmniRoute server.
+If you want to keep the same `.env` style settings, export both the `OMNIROUTE_*` and `ANTHROPIC_*` values, since the Claude CLI reads `ANTHROPIC_*`.
 
 ## Environment variables
 
